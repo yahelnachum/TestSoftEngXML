@@ -25,9 +25,9 @@
 	<SpecialMoveConstraints>
 	
 		<ResetBoard>100</ResetBoard>
-		<SwapTile>100</SwapTile>
-		<RemoveTile>100</RemoveTile>
-		<OtherMove>100</OtherMove>
+		<SwapTile>104</SwapTile>
+		<RemoveTile>120</RemoveTile>
+		<OtherMove>140</OtherMove>
 		
 	</SpecialMoveConstraints>
 	
@@ -57,15 +57,15 @@
 		<!-- T = Target Tile -->
 		<!-- S = six tile    -->
 	
-		<Row r="0">N N N N N N N N N</Row>
-		<Row r="1">N N N N N N N N N</Row>
-		<Row r="2">N N N N N N N N N</Row>
-		<Row r="3">N N N N N N N N N</Row>
-		<Row r="4">N N N N N N N N N</Row>
-		<Row r="5">N N N N N N N N N</Row>
-		<Row r="6">N N N N N N N N N</Row>
-		<Row r="7">N N N N N N N N N</Row>
-		<Row r="8">N N N N N N N N N</Row>
+		<Row>N N N N N N N N N</Row>
+		<Row>N N N N N N N N N</Row>
+		<Row>N N N N N N N N N</Row>
+		<Row>N N N N N N N N N</Row>
+		<Row>N N N N N N N N N</Row>
+		<Row>N N N N N N N N N</Row>
+		<Row>N N N N N N N N N</Row>
+		<Row>N N N N N N N N N</Row>
+		<Row>N N N N N N N N N</Row>
 	
 	</Board>
 	

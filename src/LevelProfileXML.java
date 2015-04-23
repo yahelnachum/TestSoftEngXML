@@ -11,6 +11,9 @@ import org.w3c.dom.NodeList;
 
 public class LevelProfileXML {
 
+	/**
+	 * @param fileName
+	 */
 	public static void read(String fileName){
 		try {
 
@@ -34,62 +37,75 @@ public class LevelProfileXML {
 			String levelType = doc.getElementsByTagName("Type").item(0).getTextContent();
 			System.out.println("Level Type: " + levelType);
 			
+			System.out.println();
+			
 			// Get list of tile frequencies
-			ArrayList<String> frequencies = new ArrayList<String>();
-			NodeList frequenciesNodeList = ((Element) doc.getElementsByTagName("TileFrequency").item(0)).getElementsByTagName("Tile");
-			for(int i = 0; i < frequenciesNodeList.getLength(); i++){
-				frequencies.add(frequenciesNodeList.item(i).getAttributes().item(1).getNodeValue() + " " + frequenciesNodeList.item(i).getAttributes().item(0).getNodeValue());
+			ArrayList<String> tileFrequencies = new ArrayList<String>();
+			NodeList tileFrequenciesNodeList = ((Element) doc.getElementsByTagName("TileFrequency").item(0)).getElementsByTagName("Tile");
+			for(int i = 0; i < tileFrequenciesNodeList.getLength(); i++){
+				tileFrequencies.add("Tile Number: " + tileFrequenciesNodeList.item(i).getAttributes().item(1).getNodeValue());
+				tileFrequencies.add("    Tile Frequency: " + tileFrequenciesNodeList.item(i).getAttributes().item(0).getNodeValue());
 			}
-			for(String str: frequencies){
+			for(String str: tileFrequencies){
 				System.out.println("	"+str);
 			}
 			
-			/*// Get highest level unlocked by user
-			int highestLevelUnlocked = Integer.parseInt(doc.getElementsByTagName("HighestLevelUnlocked").item(0).getTextContent());
-			System.out.println("Highest Level Unlocked: " + highestLevelUnlocked);
+			System.out.println();
 			
-			// Get list of badges that the user has unlocked
-			ArrayList<String> badges = new ArrayList<String>();
-			NodeList badgeNodeList = ((Element) doc.getElementsByTagName("Badges").item(0)).getElementsByTagName("Name");
-			for(int i = 0; i < badgeNodeList.getLength(); i++){
-				badges.add(badgeNodeList.item(i).getTextContent());
+			// Get list of tile frequencies
+			ArrayList<String> multiplierFrequencies = new ArrayList<String>();
+			NodeList multiplierFrequenciesNodeList = ((Element) doc.getElementsByTagName("TileFrequency").item(0)).getElementsByTagName("Multiplier");
+			for(int i = 0; i < multiplierFrequenciesNodeList.getLength(); i++){
+				multiplierFrequencies.add("Multiplier: " + multiplierFrequenciesNodeList.item(i).getAttributes().item(1).getNodeValue());
+				multiplierFrequencies.add("    Multiplier Frequency: " + multiplierFrequenciesNodeList.item(i).getAttributes().item(0).getNodeValue());
 			}
-			System.out.println("Badges Unlocked:");
-			for(String str: badges){
+			for(String str: multiplierFrequencies){
 				System.out.println("	"+str);
 			}
 			
-			// Get list of levels, their high scores, and star equivalents
-			NodeList levelScoreNodeList = ((Element) doc.getElementsByTagName("LevelScores").item(0)).getElementsByTagName("Level");
-			ArrayList<String> levelScores = new ArrayList<String>();
-			ArrayList<LevelHighScore> levelHighScores = new ArrayList<LevelHighScore>();
-			for(int i = 0; i < levelScoreNodeList.getLength(); i++){
-				String str = "";
-				str += "	LevelNumber: " + levelScoreNodeList.item(i).getAttributes().item(0).getTextContent() + "\n";
-				str += "	HighScore: " + levelScoreNodeList.item(i).getAttributes().item(1).getTextContent() + "\n";
-				str += "	Stars: " + levelScoreNodeList.item(i).getAttributes().item(2).getTextContent() + "\n";
-				levelScores.add(str);
-				
-				levelHighScores.add(new LevelHighScore(Integer.parseInt(levelScoreNodeList.item(i).getAttributes().item(0).getTextContent()), 
-													   Integer.parseInt(levelScoreNodeList.item(i).getAttributes().item(1).getTextContent()), 
-													   Integer.parseInt(levelScoreNodeList.item(i).getAttributes().item(2).getTextContent())));
+			// Get special move constraints
+			String resetBoardMoves = doc.getElementsByTagName("ResetBoard").item(0).getTextContent();
+			String swapTileMoves = doc.getElementsByTagName("SwapTile").item(0).getTextContent();
+			String removeTileMoves = doc.getElementsByTagName("RemoveTile").item(0).getTextContent();
+			String otherMoveMoves = doc.getElementsByTagName("OtherMove").item(0).getTextContent();
+			
+			System.out.println("ResetBoard: " + resetBoardMoves);
+			System.out.println("SwapTiles : " + swapTileMoves);
+			System.out.println("RemoveTile: " + removeTileMoves);
+			System.out.println("OtherMove : " + otherMoveMoves);
+			
+			System.out.println();
+			
+			// Get point thresholds
+			ArrayList<String> pointThresholds = new ArrayList<String>();
+			NodeList pointThresholdNodeList = ((Element) doc.getElementsByTagName("PointThresholds").item(0)).getElementsByTagName("Point");
+			for(int i = 0; i < pointThresholdNodeList.getLength(); i++){
+				pointThresholds.add("Point Threshold: " + pointThresholdNodeList.item(i).getTextContent());
 			}
-			System.out.println("Level Scores:");
-			for(String str: levelScores){
+			for(String str: pointThresholds){
 				System.out.println(str);
 			}
 			
-			// Get the aesthetic the player uses
-			String aesthetic = doc.getElementsByTagName("Aesthetic").item(0).getTextContent();
-			System.out.println("Aesthetic: " + aesthetic);
+			System.out.println();
 			
-			// Put all the data into a user profile object
-			UserProfile userProfile = new UserProfile(userName, highestLevelUnlocked, badges, levelHighScores, new Aesthetic(aesthetic));
+			// Get special move constraints
+			String moveCount = doc.getElementsByTagName("MoveCount").item(0).getTextContent();
+			String timer = doc.getElementsByTagName("Timer").item(0).getTextContent();
 			
-			System.out.println("============");
-			System.out.println(userProfile.toString());
+			System.out.println("Move Count: " + moveCount);
+			System.out.println("Timer     : " + timer);
 			
-			return userProfile;*/
+			System.out.println();
+			
+			// Get point thresholds
+			ArrayList<String> boardRows = new ArrayList<String>();
+			NodeList boardRowsNodeList = ((Element) doc.getElementsByTagName("Board").item(0)).getElementsByTagName("Row");
+			for(int i = 0; i < boardRowsNodeList.getLength(); i++){
+				boardRows.add("Row " + i + ": " + boardRowsNodeList.item(i).getTextContent());
+			}
+			for(String str: boardRows){
+				System.out.println(str);
+			}
 
 		} catch (Exception e) {
 			System.out.println("FILE NOT FOUND!");

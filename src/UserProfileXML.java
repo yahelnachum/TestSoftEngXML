@@ -26,8 +26,11 @@ public class UserProfileXML {
 			String userName = doc.getElementsByTagName("UserProfile").item(0).getAttributes().item(0).getNodeValue();
 			System.out.println("User Name: " + userName);
 			
+			UserProfile userProfile = new UserProfile(userName);
+			
 			// Get highest level unlocked by user
 			int highestLevelUnlocked = Integer.parseInt(doc.getElementsByTagName("HighestLevelUnlocked").item(0).getTextContent());
+			userProfile.setHighestLevel(highestLevelUnlocked);
 			System.out.println("Highest Level Unlocked: " + highestLevelUnlocked);
 			
 			// Get list of badges that the user has unlocked
@@ -35,6 +38,7 @@ public class UserProfileXML {
 			NodeList badgeNodeList = ((Element) doc.getElementsByTagName("Badges").item(0)).getElementsByTagName("Name");
 			for(int i = 0; i < badgeNodeList.getLength(); i++){
 				badges.add(badgeNodeList.item(i).getTextContent());
+				userProfile.addBadgeEarned(badgeNodeList.item(i).getTextContent());
 			}
 			System.out.println("Badges Unlocked:");
 			for(String str: badges){
@@ -55,6 +59,10 @@ public class UserProfileXML {
 				levelHighScores.add(new LevelHighScore(Integer.parseInt(levelScoreNodeList.item(i).getAttributes().item(0).getTextContent()), 
 													   Integer.parseInt(levelScoreNodeList.item(i).getAttributes().item(1).getTextContent()), 
 													   Integer.parseInt(levelScoreNodeList.item(i).getAttributes().item(2).getTextContent())));
+				
+				userProfile.addLevelHighScore(Integer.parseInt(levelScoreNodeList.item(i).getAttributes().item(0).getTextContent()), 
+											  Integer.parseInt(levelScoreNodeList.item(i).getAttributes().item(1).getTextContent()), 
+											  Integer.parseInt(levelScoreNodeList.item(i).getAttributes().item(2).getTextContent()));
 			}
 			System.out.println("Level Scores:");
 			for(String str: levelScores){
@@ -65,8 +73,7 @@ public class UserProfileXML {
 			String aesthetic = doc.getElementsByTagName("Aesthetic").item(0).getTextContent();
 			System.out.println("Aesthetic: " + aesthetic);
 			
-			// Put all the data into a user profile object
-			UserProfile userProfile = new UserProfile(userName, highestLevelUnlocked, badges, levelHighScores, new Aesthetic(aesthetic));
+			userProfile.setAestheticName(aesthetic);
 			
 			System.out.println("============");
 			System.out.println(userProfile.toString());
